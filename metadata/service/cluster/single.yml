@@ -1,0 +1,18 @@
+applications:
+- keepalived
+parameters:
+  _param:
+    keepalived_vip_priority: 100
+    keepalived_vip_virtual_router_id: 100
+    keepalived_vip_password: password
+    keepalived_vip_interface: eth0
+  keepalived:
+    cluster:
+      enabled: True
+      instance:
+        VIP:
+          priority: ${_param:keepalived_vip_priority}
+          virtual_router_id: ${_param:keepalived_vip_virtual_router_id}
+          password: ${_param:keepalived_vip_password}
+          address: ${_param:cluster_vip_address}
+          interface: ${_param:keepalived_vip_interface}

@@ -1,0 +1,2 @@
+keepalived/*             /usr/share/salt-formulas/env/keepalived/
+metadata/service/*      /usr/share/salt-formulas/reclass/service/keepalived/

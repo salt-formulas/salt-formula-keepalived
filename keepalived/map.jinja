@@ -1,0 +1,14 @@
+{% set cluster = salt['grains.filter_by']({
+    'Debian': {
+        'pkgs': ['keepalived'],
+        'service': 'keepalived',
+        'config': '/etc/keepalived/keepalived.conf',
+        'instance': {}
+    },
+    'RedHat': {
+        'pkgs': ['keepalived'],
+        'service': 'keepalived',
+        'config': '/etc/keepalived/keepalived.conf',
+        'instance': {}
+    },
+}, merge=salt['pillar.get']('keepalived:cluster')) %}
