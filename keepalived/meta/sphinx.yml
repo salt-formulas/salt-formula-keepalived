@@ -1,0 +1,9 @@
+doc:
+  name: Keepalived
+  description: The main goal of this project is to provide simple and robust facilities for loadbalancing and high-availability to Linux system and Linux based infrastructures.
+  role:
+  {%- if pillar.keepalived.cluster is defined %}
+    cluster:
+      name: cluster
+      param: {}
+  {%- endif %}
