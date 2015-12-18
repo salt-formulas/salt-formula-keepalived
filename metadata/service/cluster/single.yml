@@ -1,5 +1,7 @@
 applications:
 - keepalived
+classes:
+- service.keepalived.support
 parameters:
   _param:
     keepalived_vip_priority: 100
