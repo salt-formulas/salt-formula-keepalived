@@ -1,0 +1,7 @@
+check:
+  local_keepalived_cluster_proc:
+    command: "PATH=$PATH:/usr/lib64/nagios/plugins:/usr/lib/nagios/plugins check_procs -C keepalived -c 1:20"
+    interval: 60
+    occurrences: 1
+    subscribers:
+    - local-keepalived-cluster
