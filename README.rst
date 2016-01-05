@@ -8,25 +8,43 @@ Keepalived is a routing software written in C. The main goal of this project is 
 Sample pillar
 =============
 
+Simple virtual IP on an interface
+
 .. code-block:: yaml
 
     keepalived:
       cluster:
         enabled: True
         instance:
-          VI_1:
+          VIP1:
             priority: 100 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 51
             password: pass
             address: 192.168.10.1
             interface: eth0
-          VI_2:
+          VIP2:
             priority: 150 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 52
             password: pass
             address: 10.0.0.5
             interface: eth1
- 
+
+Multiple virtual IPs on single interface
+
+.. code-block:: yaml
+
+    keepalived:
+      cluster:
+        enabled: True
+        instance:
+          VIP1:
+            priority: 100 (highest priority must be on primary server, different for cluster members)
+            virtual_router_id: 51
+            password: pass
+            addresses:
+            - 192.168.10.1
+            - 192.168.10.2
+            interface: eth0
 
 Read more
 =========
