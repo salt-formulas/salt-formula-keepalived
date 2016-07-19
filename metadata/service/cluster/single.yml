@@ -4,7 +4,6 @@ classes:
 - service.keepalived.support
 parameters:
   _param:
-    keepalived_vip_priority: 100
     keepalived_vip_virtual_router_id: 100
     keepalived_vip_password: password
     keepalived_vip_interface: eth0
