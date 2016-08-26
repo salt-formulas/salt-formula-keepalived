@@ -24,6 +24,8 @@ keepalived_{{ instance_name }}_notify:
   - mode: 744
   - source: salt://keepalived/files/keepalivednotify.sh
   - template: jinja
+  - defaults:
+      instance_name: {{ instance_name }}
   - require:
     - pkg: keepalived_packages
   - require_in:

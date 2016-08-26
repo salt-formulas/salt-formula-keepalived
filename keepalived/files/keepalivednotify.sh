@@ -1,21 +1,16 @@
 #!/bin/bash
+{%- set instance = salt['pillar.get']('keepalived:server:instance:'+instance_name) %}
 
 TYPE=$1
 NAME=$2
 STATE=$3
 
 case $STATE in
-        "MASTER") /usr/bin/docker start jenkins
-                  /usr/bin/docker start artifactory
-                  exit 0
+        "MASTER") {{ instance.notify_cmd.master|indent(19, false) }}
                   ;;
-        "BACKUP") /usr/bin/docker stop jenkins
-                  /usr/bin/docker stop artifactory
-                  exit 0
+        "BACKUP") {{ instance.notify_cmd.backup|indent(19, false) }}
                   ;;
-        "FAULT")  /usr/bin/docker stop jenkins
-                  /usr/bin/docker stop artifactory
-                  exit 0
+        "FAULT")  {{ instance.notify_cmd.fault|indent(19, false) }}
                   ;;
         *)        echo "unknown state"
                   exit 1
