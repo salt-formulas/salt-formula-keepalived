@@ -77,20 +77,17 @@ Notify action in keepalived.
         instance:
           VIP1:
             nopreempt: True
-            notify_action: 
-              master: |
-                /usr/bin/docker start jenkins
-                /usr/bin/docker start gerrit
-                exit 0
-              backup: |
-                /usr/bin/docker stop jenkins
-                /usr/bin/docker stop gerrit
-                exit 0
-              fault: |
-                /usr/bin/docker stop jenkins
-                /usr/bin/docker stop gerrit
-                exit 0
-            priority: 100 (highest priority must be on primary server, different for cluster members)
+            notify_action:
+              master:
+                - /usr/bin/docker start jenkins
+                - /usr/bin/docker start gerrit
+              backup:
+                - /usr/bin/docker stop jenkins
+                - /usr/bin/docker stop gerrit
+              fault:
+                - /usr/bin/docker stop jenkins
+                - /usr/bin/docker stop gerrit
+            priority: 100 # highest priority must be on primary server, different for cluster members
             virtual_router_id: 51
             password: pass
             addresses:

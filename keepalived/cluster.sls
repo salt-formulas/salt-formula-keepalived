@@ -20,12 +20,12 @@ keepalived_config:
 
 keepalived_{{ instance_name }}_notify:
   file.managed:
-  - name: /usr/local/bin/keepalivednotify_{{ instance_name }}.sh
-  - mode: 744
-  - source: salt://keepalived/files/keepalivednotify.sh
+  - name: /usr/local/bin/keepalived_notify_{{ instance_name }}.sh
+  - mode: 755
+  - source: salt://keepalived/files/keepalived_notify.sh
   - template: jinja
   - defaults:
-      instance_name: {{ instance_name }}
+      notify_action: {{ instance.notify_action }}
   - require:
     - pkg: keepalived_packages
   - require_in:
