@@ -16,7 +16,7 @@ keepalived_config:
 
 {% for instance_name, instance in cluster.instance.iteritems() %}
 
-{{%- if instance.notify_action is defined }}
+{%- if instance.notify_action is defined %}
 
 keepalived_{{ instance_name }}_notify:
   file.managed:
