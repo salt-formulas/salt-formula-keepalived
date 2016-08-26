@@ -14,6 +14,25 @@ keepalived_config:
   - require:
     - pkg: keepalived_packages
 
+{% for instance_name, instance in cluster.instance.iteritems() %}
+
+{{%- if instance.notify_action is defined }}
+
+keepalived_{{ instance_name }}_notify:
+  file.managed:
+  - name: /usr/local/bin/keepalivednotify_{{ instance_name }}.sh
+  - mode: 744
+  - source: salt://keepalived/files/keepalivednotify.sh
+  - template: jinja
+  - require:
+    - pkg: keepalived_packages
+  - require_in:
+    - service: keepalived_service
+
+{%- endif %}
+
+{% endfor %}
+
 keepalived_service:
   service.running:
   - name: {{ cluster.service }}

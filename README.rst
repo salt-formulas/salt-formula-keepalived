@@ -17,12 +17,14 @@ Simple virtual IP on an interface
         enabled: True
         instance:
           VIP1:
+            nopreempt: True
             priority: 100 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 51
             password: pass
             address: 192.168.10.1
             interface: eth0
           VIP2:
+            nopreempt: True
             priority: 150 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 52
             password: pass
@@ -38,6 +40,56 @@ Multiple virtual IPs on single interface
         enabled: True
         instance:
           VIP1:
+            nopreempt: True
+            priority: 100 (highest priority must be on primary server, different for cluster members)
+            virtual_router_id: 51
+            password: pass
+            addresses:
+            - 192.168.10.1
+            - 192.168.10.2
+            interface: eth0
+
+Disable nopreempt mode to have Master. Highest priority is taken in all cases.
+
+.. code-block:: yaml
+
+    keepalived:
+      cluster:
+        enabled: True
+        instance:
+          VIP1:
+            nopreempt: False
+            priority: 100 (highest priority must be on primary server, different for cluster members)
+            virtual_router_id: 51
+            password: pass
+            addresses:
+            - 192.168.10.1
+            - 192.168.10.2
+            interface: eth0
+
+Notify action in keepalived.
+
+.. code-block:: yaml
+
+    keepalived:
+      cluster:
+        enabled: True
+        instance:
+          VIP1:
+            nopreempt: True
+            notify_action: 
+              master: |
+                /usr/bin/docker start jenkins
+                /usr/bin/docker start gerrit
+                exit 0
+              backup: |
+                /usr/bin/docker stop jenkins
+                /usr/bin/docker stop gerrit
+                exit 0
+              fault: |
+                /usr/bin/docker stop jenkins
+                /usr/bin/docker stop gerrit
+                exit 0
             priority: 100 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 51
             password: pass
