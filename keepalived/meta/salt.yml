@@ -1,0 +1,4 @@
+orchestrate:
+  cluster:
+    priority: 100
+
