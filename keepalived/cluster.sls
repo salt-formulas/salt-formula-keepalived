@@ -40,6 +40,9 @@ keepalived_service:
   - name: {{ cluster.service }}
   - enable: true
   - reload: true
+  {%- if grains.get('init', None) != 'systemd' %}
+  - sig: keepalived
+  {%- endif %}
   - watch:
     - file: keepalived_config
 
