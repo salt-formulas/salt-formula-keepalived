@@ -1,6 +1,6 @@
 {% set cluster = salt['grains.filter_by']({
     'Debian': {
-        'pkgs': ['keepalived'],
+        'pkgs': ['keepalived', 'python-pyroute2'],
         'service': 'keepalived',
         'config': '/etc/keepalived/keepalived.conf',
         'instance': {}
