@@ -1,0 +1,24 @@
+{%- if pillar.keepalived.cluster is defined %}
+{%- from "keepalived/map.jinja" import cluster with context %}
+{%- set vrrp_addresses = [] %}
+{%- for instance_name, instance in cluster.instance.iteritems() %}
+    {%- if instance.addresses is defined %}
+        {%- for address in instance.addresses %}
+            {%- do vrrp_addresses.append({'label': instance_name, 'address': address}) %}
+        {%- endfor %}
+    {%- else %}
+        {%- do vrrp_addresses.append({'label': instance_name, 'address': instance.address}) %}
+    {%- endif %}
+{%- endfor %}
+{%- if cluster.get('enabled', False) and vrrp_addresses|length > 0 %}
+local_plugin:
+  collectd_vrrp:
+    plugin: python
+    template: keepalived/files/collectd_vrrp.conf
+    ip_addresses:
+{%- for item in vrrp_addresses %}
+    - address: {{ item.address }}
+      label: {{ item.label }}
+{%- endfor %}
+{%- endif %}
+{%- endif %}
