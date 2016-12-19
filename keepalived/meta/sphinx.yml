@@ -10,3 +10,7 @@ doc:
           value: {{ cluster.instance.VIP.virtual_router_id }}
         priority:
           value: {{ cluster.instance.VIP.priority }}
+        address:
+          value: {{ cluster.instance.VIP.address }}
+        interface:
+          value: {{ cluster.instance.VIP.interface }}
