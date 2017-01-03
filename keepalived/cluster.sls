@@ -6,6 +6,12 @@ keepalived_packages:
   pkg.installed:
   - names: {{ cluster.pkgs }}
 
+{%- if pillar.collectd is defined %}
+keepalived_packages_for_collectd:
+  pkg.installed:
+  - names: {{ cluster.collectd_pkgs }}
+{%- endif %}
+
 keepalived_config:
   file.managed:
   - name: {{ cluster.config }}
