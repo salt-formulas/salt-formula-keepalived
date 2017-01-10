@@ -7,6 +7,6 @@ doc:
       name: cluster
       param:
         {%- for instance_name, instance in cluster.instance.iteritems() %}
-        router {{ router_name }}:
+        router {{ instance_name }}:
           {{ instance.address }} at {{ instance.interface }}, priority {{ instance.priority }} of router {{ instance.virtual_router_id }}
         {%- endfor %}
