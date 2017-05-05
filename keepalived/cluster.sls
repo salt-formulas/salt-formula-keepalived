@@ -41,17 +41,19 @@ keepalived_{{ instance_name }}_notify:
 
 {% endfor %}
 
+{%- set _deployed = [] %}
 {%- for name, script in cluster.get('vrrp_scripts', {}).iteritems() %}
-keepalived_vrrp_script_{{ name }}:
+{%- if script.get('name', name) not in _deployed %}keepalived_vrrp_script_{{ script.get('name', name) }}:{% else %}{% continue %}{% endif %}
+{%- do _deployed.append(script.get('name', name)) %}
     file.managed:
-    - name: /usr/local/bin/vrrp_script_{{ name }}.sh
+    - name: /usr/local/bin/vrrp_script_{{ script.get('name', name) }}.sh
     - mode: 755
     - source:
-      - salt://keepalived/files/vrrp_script_{{ name }}.sh
+      - salt://keepalived/files/vrrp_script_{{ script.get('name', name) }}.sh
       - salt://keepalived/files/vrrp_script.sh
     - template: jinja
     - defaults:
-          script: {{ script|yaml }}
+        script: {{ script|yaml }}
     - require_in:
       - service: keepalived_service
 {% endfor %}

@@ -18,9 +18,52 @@ keepalived:
         - 192.168.10.1
         - 192.168.10.2
         interface: eth0
-        track_script: random_check
+        track_script: check_random_exit
+      VIP2:
+        priority: 100
+        virtual_router_id: 12
+        password: pass
+        addresses:
+        - 192.168.12.1
+        - 192.168.12.2
+        interface: eth0
+        track_script: check_haproxy
+      VIP3:
+        priority: 100
+        virtual_router_id: 13
+        password: pass
+        addresses:
+        - 192.168.13.1
+        - 192.168.13.2
+        interface: eth0
+        track_script: check_mysql_cluster
+      VIP4:
+        priority: 100
+        virtual_router_id: 14
+        password: pass
+        addresses:
+        - 192.168.14.1
+        - 192.168.14.2
+        interface: eth0
+        track_script: check_ssh_port
     vrrp_scripts:
-      random_check:
+      check_ssh_port:
+        name: check_port
+        args: "22"
+      check_mysql_cluster:
+        args:
+          - clustercheck
+          - clustercheck
+          - available_when_donor=0
+          - available_when_readonly=0
+      check_haproxy:
+        name: check_pidof
+        args: haproxy
+      check_haproxy2:
+        name: check_pidof
+        args:
+          - haproxy
+      check_random_exit:
         interval: 10
         content: |
           #!/bin/bash
