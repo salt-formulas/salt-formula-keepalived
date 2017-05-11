@@ -111,7 +111,7 @@ Track/vrrp scripts for keepalived instance:
             - 192.168.11.1
             - 192.168.11.2
             interface: eth0
-            track_script: haproxy_check
+            track_script: check_haproxy
           VIP3:
             priority: 100
             virtual_router_id: 11
@@ -120,9 +120,30 @@ Track/vrrp scripts for keepalived instance:
             - 192.168.10.1
             - 192.168.10.2
             interface: eth0
-            track_script: random_check
+            track_script: check_random_exit
         vrrp_scripts:
-          random_check:
+          check_haproxy:
+            name: check_pidof
+            args:
+              - haproxy
+          check_mysql_port:
+            name: check_port
+            args:
+              - 3306
+              - TCP
+              - 4
+          check_ssh:
+            name: check_port
+            args: "22"
+          check_mysql_cluster:
+            args:
+              # github: olafz/percona-clustercheck
+              # <user> <pass> <available_when_donor=0|1> <log_file> <available_when_readonly=0|1> <defaults_extra_file>
+              - clustercheck
+              - clustercheck
+              - available_when_donor=0
+              - available_when_readonly=0
+          check_random_exit:
             interval: 10
             content: |
               #!/bin/bash
