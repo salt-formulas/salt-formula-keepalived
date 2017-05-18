@@ -120,7 +120,11 @@ Track/vrrp scripts for keepalived instance:
             - 192.168.10.1
             - 192.168.10.2
             interface: eth0
-            track_script: check_random_exit
+            track_script:
+              check_random_exit:
+                interval: 10
+              check_port:
+                weight: 50
         vrrp_scripts:
           check_haproxy:
             name: check_pidof
@@ -148,6 +152,7 @@ Track/vrrp scripts for keepalived instance:
             content: |
               #!/bin/bash
               exit $(($RANDOM%2))
+            weight: 50
 
 
 Read more

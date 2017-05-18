@@ -36,7 +36,11 @@ keepalived:
         - 192.168.13.1
         - 192.168.13.2
         interface: eth0
-        track_script: check_mysql_cluster
+        track_script:
+          check_haproxy:
+            interval: 10
+          check_mysql_cluster:
+            weight: 50
       VIP4:
         priority: 100
         virtual_router_id: 14
@@ -45,7 +49,10 @@ keepalived:
         - 192.168.14.1
         - 192.168.14.2
         interface: eth0
-        track_script: check_ssh_port
+        track_script:
+          check_haproxy: None
+          check_ssh_port:
+            weight: 50
     vrrp_scripts:
       check_ssh_port:
         name: check_port
