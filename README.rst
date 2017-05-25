@@ -49,6 +49,28 @@ Multiple virtual IPs on single interface
             - 192.168.10.2
             interface: eth0
 
+
+Use unicast
+
+.. code-block:: yaml
+
+    keepalived:
+      cluster:
+        enabled: True
+        instance:
+          VIP1:
+            nopreempt: True
+            priority: 100 (highest priority must be on primary server, different for cluster members)
+            virtual_router_id: 51
+            password: pass
+            address: 192.168.10.1
+            interface: eth0
+            unicast_src_ip: 172.16.10.1
+            unicast_peer:
+              172.16.10.2
+              172.16.10.3
+
+
 Disable nopreempt mode to have Master. Highest priority is taken in all cases.
 
 .. code-block:: yaml
