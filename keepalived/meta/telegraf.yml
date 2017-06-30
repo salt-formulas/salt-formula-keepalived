@@ -1,0 +1,6 @@
+agent:
+  input:
+    procstat:
+      process:
+        keepalived:
+          exe: keepalived
