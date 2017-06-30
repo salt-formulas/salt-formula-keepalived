@@ -1,0 +1,16 @@
+{%- from "keepalived/map.jinja" import cluster with context %}
+{%- if cluster.get('enabled', False) %}
+server:
+  alert:
+    ProcstatRunningKeepalived:
+      if: >-
+        procstat_running{process_name="keepalived"} == 0
+      {% raw %}
+      labels:
+        severity: warning
+        service: keepalived
+      annotations:
+        summary: 'Keepalived service is down'
+        description: 'Keepalived service is down on node {{ $labels.host }}'
+      {% endraw %}
+{%- endif %}
