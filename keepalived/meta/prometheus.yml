@@ -2,7 +2,7 @@
 {%- if cluster.get('enabled', False) %}
 server:
   alert:
-    ProcstatRunningKeepalived:
+    KeepalivedProcessDown:
       if: >-
         procstat_running{process_name="keepalived"} == 0
       {% raw %}
