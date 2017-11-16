@@ -20,6 +20,7 @@ Simple virtual IP on an interface
             nopreempt: True
             priority: 100 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 51
+            auth_type: AH
             password: pass
             address: 192.168.10.1
             interface: eth0
@@ -27,6 +28,7 @@ Simple virtual IP on an interface
             nopreempt: True
             priority: 150 (highest priority must be on primary server, different for cluster members)
             virtual_router_id: 52
+            auth_type: PASS
             password: pass
             address: 10.0.0.5
             interface: eth1
