@@ -10,6 +10,6 @@ Vcs-Git: https://github.com/tcpcloud/salt-formula-keepalived.git
 
 Package: salt-formula-keepalived
 Architecture: all
-Depends: ${misc:Depends}, salt-master, reclass
+Depends: ${misc:Depends}
 Description: Keepalived Salt formula
  Install and configure Keepalived server and client.
