@@ -17,8 +17,9 @@ install:
   - bundle install
 
 env:
-    - PLATFORM=trevorj/salty-whales:trusty SUITE=keepalived-cluster
-    - PLATFORM=trevorj/salty-whales:xenial SUITE=keepalived-cluster
+    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2016.3 SUITE=keepalived-cluster
+    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-xenial-salt-2017.7 SUITE=keepalived-cluster
+#    - PLATFORM=epcim/salt-formulas:saltstack-ubuntu-bionic-salt-2017.7 SUITE=keepalived-cluster
 
 before_script:
   - set -o pipefail
