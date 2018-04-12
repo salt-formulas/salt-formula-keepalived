@@ -1,0 +1,58 @@
+agent:
+  config:
+    label:
+      keepalived:
+        input:
+          keeaplived_syslog:
+            type: tail
+            tag: keepalived.syslog
+            path: /var/log/syslog
+            pos_file: {{ pillar.fluentd.agent.dir.positiondb }}/keepalived.pos
+            parser:
+              type: regexp
+              format: >-
+                '.*VRRP_Instance\(VIP\) Entering (?<state>MASTER|FAILED|BACKUP) STATE'
+        filter:
+          keepalived_state_parse:
+            tag: metric.keepalived_state
+            type: parser
+            key_name: Payload
+            parser:
+              type: regexp
+              format: '^(?<Timestamp>) (?<hostname>) .*VRRP_Instance.*(?<state>MASTER|FAILED|BACKUP) STATE'
+          keepalived_state:
+            tag: metric.keepalived_state
+            require:
+              - keepalived_state_parse
+            type: prometheus
+            metric:
+              - name: keepalived_state
+                type: gauge
+                desc: The keepalived state.
+                key: state
+            label:
+              - name: host
+                value: ${hostname}
+          match_state:
+            type: record_transformer
+            tag: keepalived.**
+            enable_ruby: true
+            record:
+              - name: state
+                value: ${ {"FAILED"=>0,"BACKUP"=>1,"MASTER"=>2}[record["state"]] }
+        match:
+          push_to_default:
+            tag: 'keepalived.**'
+            type: copy
+            store:
+              - type: relabel
+                label: default_output
+              - type: rewrite_tag_filter
+                rule:
+                  - name: state
+                    regexp: '.'
+                    result: metric.keepalived_state
+          push_to_metric:
+            tag: 'metric.**'
+            type: relabel
+            label: default_metric

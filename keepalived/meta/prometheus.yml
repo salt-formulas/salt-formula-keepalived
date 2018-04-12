@@ -13,4 +13,15 @@ server:
         summary: 'Keepalived service is down'
         description: 'Keepalived service is down on node {{ $labels.host }}'
       {% endraw %}
+    KeepalivedStateFailed:
+      if: >-
+        keepalived_state == 0
+      {% raw %}
+      labels:
+        severity: warning
+        service: keepalived
+      annotations:
+        summary: 'Keepalived is in the Failed state'
+        description: 'Keepalived service is in Failed state on node {{ $labels.host }}'
+      {% endraw %}
 {%- endif %}

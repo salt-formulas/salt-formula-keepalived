@@ -13,3 +13,7 @@ parameters:
         enabled: true
       prometheus:
         enabled: true
+      fluentd:
+        enabled: true
+      grafana:
+        enabled: true
