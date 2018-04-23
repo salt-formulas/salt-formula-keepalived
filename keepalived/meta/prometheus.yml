@@ -24,4 +24,15 @@ server:
         summary: 'Keepalived entered the FAILED state'
         description: 'Keepalived is in the FAILED state on node {{ $labels.host }}'
       {% endraw %}
+    KeepalivedMultipleIPAddr:
+      if: 'count(ipcheck_assigned) by (ip) > 1'
+      {% raw %}
+      for: 2m
+      labels:
+        severity: major
+        service: keepalived
+      annotations:
+        summary: 'Single IP is assigned more than once'
+        description: 'The IP: {{ $labels.ip }} is assigned more than once'
+      {% endraw %}
 {%- endif %}

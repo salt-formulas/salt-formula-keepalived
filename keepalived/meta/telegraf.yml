@@ -4,3 +4,6 @@ agent:
       process:
         keepalived:
           exe: keepalived
+    ipcheck:
+      template: keepalived/files/telegraf.conf
+      interface_name_regexp_exclude: '^docker.*'
