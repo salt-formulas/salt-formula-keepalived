@@ -7,21 +7,21 @@ server:
         procstat_running{process_name="keepalived"} == 0
       {% raw %}
       labels:
-        severity: warning
+        severity: major
         service: keepalived
       annotations:
-        summary: 'Keepalived service is down'
-        description: 'Keepalived service is down on node {{ $labels.host }}'
+        summary: 'Keepalived process is down'
+        description: 'Keepalived process is down on node {{ $labels.host }}'
       {% endraw %}
-    KeepalivedStateFailed:
+    KeepalivedFailedState:
       if: >-
         keepalived_state == 0
       {% raw %}
       labels:
-        severity: warning
+        severity: minor
         service: keepalived
       annotations:
-        summary: 'Keepalived is in the Failed state'
-        description: 'Keepalived service is in Failed state on node {{ $labels.host }}'
+        summary: 'Keepalived entered the FAILED state'
+        description: 'Keepalived is in the FAILED state on node {{ $labels.host }}'
       {% endraw %}
 {%- endif %}
