@@ -11,7 +11,7 @@ server:
         service: keepalived
       annotations:
         summary: 'Keepalived process is down'
-        description: 'Keepalived process is down on node {{ $labels.host }}'
+        description: 'The Keepalived process is down on node {{ $labels.host }}.'
       {% endraw %}
     KeepalivedFailedState:
       if: >-
@@ -22,7 +22,7 @@ server:
         service: keepalived
       annotations:
         summary: 'Keepalived entered the FAILED state'
-        description: 'Keepalived is in the FAILED state on node {{ $labels.host }}'
+        description: 'Keepalived is in the FAILED state on node {{ $labels.host }}.'
       {% endraw %}
     KeepalivedMultipleIPAddr:
       if: >-
@@ -34,7 +34,7 @@ server:
         service: keepalived
       annotations:
         summary: 'Single IP is assigned more than once'
-        description: 'The IP: {{ $labels.ip }} is assigned more than once'
+        description: 'The IP: {{ $labels.ip }} is assigned more than once.'
       {% endraw %}
     KeepalivedServiceOutage:
       if: >-
@@ -45,6 +45,6 @@ server:
         service: keepalived
       annotations:
         summary: 'Keepalived cluster service outage'
-        description: 'All keepalived processes within cluster {{ $labels.cluster }} are down. Keepalived service is not available'
+        description: 'All keepalived processes within cluster {{ $labels.cluster }} are down. The Keepalived service is not available.'
       {% endraw %}
 {%- endif %}
