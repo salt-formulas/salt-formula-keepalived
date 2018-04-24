@@ -25,7 +25,8 @@ server:
         description: 'Keepalived is in the FAILED state on node {{ $labels.host }}'
       {% endraw %}
     KeepalivedMultipleIPAddr:
-      if: 'count(ipcheck_assigned) by (ip) > 1'
+      if: >-
+        count(ipcheck_assigned) by (ip) > 1
       {% raw %}
       for: 2m
       labels:
@@ -34,5 +35,16 @@ server:
       annotations:
         summary: 'Single IP is assigned more than once'
         description: 'The IP: {{ $labels.ip }} is assigned more than once'
+      {% endraw %}
+    KeepalivedServiceOutage:
+      if: >-
+        count(label_replace(procstat_running{process_name="keepalived"}, "cluster", "$1", "host", "([^0-9]+).+")) by (cluster) == count(label_replace(procstat_running{process_name="keepalived"} == 0, "cluster", "$1", "host", "([^0-9]+).+")) by (cluster)
+      {% raw %}
+      labels:
+        severity: critical
+        service: keepalived
+      annotations:
+        summary: 'Keepalived cluster service outage'
+        description: 'All keepalived processes within cluster {{ $labels.cluster }} are down. Keepalived service is not available'
       {% endraw %}
 {%- endif %}
