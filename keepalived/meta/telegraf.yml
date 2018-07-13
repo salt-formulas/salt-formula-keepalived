@@ -1,3 +1,4 @@
+{%- from "keepalived/map.jinja" import cluster with context %}
 agent:
   input:
     procstat:
@@ -7,3 +8,16 @@ agent:
     ipcheck:
       template: keepalived/files/telegraf.conf
       interface_name_regexp_exclude: '^docker.*'
+      ips: [
+        {%- for _, vip in cluster.instance.iteritems() %}
+          {%- if vip.get('enabled', True) %}
+            {%- if vip.get('address', False) %}
+        "{{ vip.address }}"{%- if not loop.last %}, {% endif %}
+            {%- elif vip.get('addresses', False) %}
+              {%- for ip in vip.addresses %}
+        "{{ ip }}"{%- if not loop.last %}, {% endif %}
+              {%- endfor %}
+            {%- endif %}
+          {%- endif %}
+        {%- endfor %}
+      ]
