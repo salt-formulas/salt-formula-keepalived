@@ -1,0 +1,5 @@
+dashboard:
+  keepalived_prometheus:
+    datasource: prometheus
+    format: json
+    template: keepalived/files/grafana_dashboards/keepalived_prometheus.json

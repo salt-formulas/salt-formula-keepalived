@@ -21,8 +21,8 @@ server:
         severity: minor
         service: keepalived
       annotations:
-        summary: "Keepalived state is FAILED"
-        description: "Keepalived is in the FAILED state on the {{ $labels.host }} node."
+        summary: "Keepalived VRRP state is FAILED"
+        description: "Keepalived VRRP is in the FAILED state on the {{ $labels.host }} node."
       {% endraw %}
     KeepalivedMultipleIPAddr:
       if: >-
