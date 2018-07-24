@@ -34,7 +34,7 @@ keepalived_{{ instance_name }}_notify:
       notify_action: {{ instance.notify_action }}
   - require:
     - pkg: keepalived_packages
-  - require_in:
+  - watch_in:
     - service: keepalived_service
 
 {%- endif %}
@@ -54,7 +54,7 @@ keepalived_{{ instance_name }}_notify:
     - template: jinja
     - defaults:
         script: {{ script|yaml }}
-    - require_in:
+    - watch_in:
       - service: keepalived_service
 {% endfor %}
 
