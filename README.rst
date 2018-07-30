@@ -1,14 +1,24 @@
-==========
-Keepalived
-==========
+=====
+Usage
+=====
 
-Keepalived is a routing software written in C. The main goal of this project is to provide simple and robust facilities for loadbalancing and high-availability to Linux system and Linux based infrastructures. Loadbalancing framework relies on well-known and widely used Linux Virtual Server (IPVS) kernel module providing Layer4 loadbalancing. Keepalived implements a set of checkers to dynamically and adaptively maintain and manage loadbalanced server pool according their health. On the other hand high-availability is achieved by VRRP protocol. VRRP is a fundamental brick for router failover. In addition, Keepalived implements a set of hooks to the VRRP finite state machine providing low-level and high-speed protocol interactions. Keepalived frameworks can be used independently or all together to provide resilient infrastructures.
-
+Keepalived is a routing software written in C. The main goal of this project
+is to provide simple and robust facilities for loadbalancing and
+high-availability to Linux system and Linux based infrastructures.
+Loadbalancing framework relies on well-known and widely used Linux Virtual
+Server (IPVS) kernel module providing Layer4 loadbalancing. Keepalived
+implements a set of checkers to dynamically and adaptively maintain and
+manage loadbalanced server pool according their health. On the other hand
+high-availability is achieved by VRRP protocol. VRRP is a fundamental brick
+for router failover. In addition, Keepalived implements a set of hooks to the
+VRRP finite state machine providing low-level and high-speed protocol
+interactions. Keepalived frameworks can be used independently or all together
+to provide resilient infrastructures.
 
 Sample pillar
 =============
 
-Simple virtual IP on an interface
+Simple virtual IP on an interface:
 
 .. code-block:: yaml
 
@@ -33,7 +43,7 @@ Simple virtual IP on an interface
             address: 10.0.0.5
             interface: eth1
 
-Multiple virtual IPs on single interface
+Multiple virtual IPs on single interface:
 
 .. code-block:: yaml
 
@@ -51,8 +61,7 @@ Multiple virtual IPs on single interface
             - 192.168.10.2
             interface: eth0
 
-
-Use unicast
+Use unicast:
 
 .. code-block:: yaml
 
@@ -72,8 +81,8 @@ Use unicast
               172.16.10.2
               172.16.10.3
 
-
-Disable nopreempt mode to have Master. Highest priority is taken in all cases.
+Disable nopreempt mode to have Master. Highest priority is taken
+in all cases:
 
 .. code-block:: yaml
 
@@ -91,7 +100,7 @@ Disable nopreempt mode to have Master. Highest priority is taken in all cases.
             - 192.168.10.2
             interface: eth0
 
-Notify action in keepalived.
+Notify action in keepalived:
 
 .. code-block:: yaml
 
@@ -178,7 +187,6 @@ Track/vrrp scripts for keepalived instance:
               exit $(($RANDOM%2))
             weight: 50
 
-
 Read more
 =========
 
@@ -187,32 +195,26 @@ Read more
 Documentation and Bugs
 ======================
 
-To learn how to install and update salt-formulas, consult the documentation
-available online at:
+* http://salt-formulas.readthedocs.io/
+   Learn how to install and update salt-formulas
 
-    http://salt-formulas.readthedocs.io/
+* https://github.com/salt-formulas/salt-formula-keepalived/issues
+   In the unfortunate event that bugs are discovered, report the issue to the
+   appropriate issue tracker. Use the Github issue tracker for a specific salt
+   formula
 
-In the unfortunate event that bugs are discovered, they should be reported to
-the appropriate issue tracker. Use Github issue tracker for specific salt
-formula:
+* https://launchpad.net/salt-formulas
+   For feature requests, bug reports, or blueprints affecting the entire
+   ecosystem, use the Launchpad salt-formulas project
 
-    https://github.com/salt-formulas/salt-formula-keepalived/issues
+* https://launchpad.net/~salt-formulas-users
+   Join the salt-formulas-users team and subscribe to mailing list if required
 
-For feature requests, bug reports or blueprints affecting entire ecosystem,
-use Launchpad salt-formulas project:
+* https://github.com/salt-formulas/salt-formula-keepalived
+   Develop the salt-formulas projects in the master branch and then submit pull
+   requests against a specific formula
 
-    https://launchpad.net/salt-formulas
+* #salt-formulas @ irc.freenode.net
+   Use this IRC channel in case of any questions or feedback which is always
+   welcome
 
-You can also join salt-formulas-users team and subscribe to mailing list:
-
-    https://launchpad.net/~salt-formulas-users
-
-Developers wishing to work on the salt-formulas projects should always base
-their work on master branch and submit pull request against specific formula.
-
-    https://github.com/salt-formulas/salt-formula-keepalived
-
-Any questions or feedback is always welcome so feel free to join our IRC
-channel:
-
-    #salt-formulas @ irc.freenode.net
