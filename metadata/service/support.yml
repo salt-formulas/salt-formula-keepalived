@@ -14,6 +14,6 @@ parameters:
       prometheus:
         enabled: true
       fluentd:
-        enabled: true
+        enabled: false
       grafana:
         enabled: true

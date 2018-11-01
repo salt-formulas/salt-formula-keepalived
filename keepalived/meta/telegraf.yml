@@ -5,6 +5,8 @@ agent:
       process:
         keepalived:
           exe: keepalived
+    keepalived:
+      template: keepalived/files/vrrp_telegraf.conf
     ipcheck:
       template: keepalived/files/telegraf.conf
       interface_name_regexp_exclude: '^docker.*'

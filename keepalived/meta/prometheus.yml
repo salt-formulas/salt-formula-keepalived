@@ -13,6 +13,17 @@ server:
         summary: "Keepalived process is down"
         description: "The Keepalived process on the {{ $labels.host }} node is down."
       {% endraw %}
+    KeepalivedProcessNotResponsive:
+      if: >-
+        keepalived_up == 0
+      {% raw %}
+      labels:
+        severity: major
+        service: keepalived
+      annotations:
+        summary: "Keepalived process is not responding"
+        description: "The Keepalived process on the {{ $labels.host }} node is not responding."
+      {% endraw %}
     KeepalivedFailedState:
       if: >-
         keepalived_state == 0
@@ -22,7 +33,18 @@ server:
         service: keepalived
       annotations:
         summary: "Keepalived VRRP state is FAILED"
-        description: "Keepalived VRRP is in the FAILED state on the {{ $labels.host }} node."
+        description: "The Keepalived VRRP {{ $labels.name }} is in the FAILED state on the {{ $labels.host }} node."
+      {% endraw %}
+    KeepalivedUnknownState:
+      if: >-
+        keepalived_state == -1
+      {% raw %}
+      labels:
+        severity: minor
+        service: keepalived
+      annotations:
+        summary: "Keepalived VRRP state is UNKNOWN"
+        description: "The Keepalived VRRP {{ $labels.name }} is in the UNKNOWN state on the {{ $labels.host }} node."
       {% endraw %}
     KeepalivedMultipleIPAddr:
       if: >-

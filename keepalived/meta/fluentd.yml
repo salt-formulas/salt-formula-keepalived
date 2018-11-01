@@ -2,6 +2,7 @@ agent:
   config:
     label:
       keepalived:
+        enabled: false
         input:
           keeaplived_syslog:
             type: tail
