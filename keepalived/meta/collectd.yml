@@ -1,7 +1,7 @@
 {%- if pillar.keepalived.cluster is defined %}
 {%- from "keepalived/map.jinja" import cluster with context %}
 {%- set vrrp_addresses = [] %}
-{%- for instance_name, instance in cluster.instance.iteritems() %}
+{%- for instance_name, instance in cluster.instance.items() %}
     {%- if instance.addresses is defined %}
         {%- for address in instance.addresses %}
             {%- do vrrp_addresses.append({'label': instance_name, 'address': address}) %}
