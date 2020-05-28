@@ -11,7 +11,7 @@ agent:
       template: keepalived/files/telegraf.conf
       interface_name_regexp_exclude: '^docker.*'
       ips: [
-        {%- for _, vip in cluster.instance.iteritems() %}
+        {%- for _, vip in cluster.instance.items() %}
           {%- if vip.get('enabled', True) %}
             {%- if vip.get('address', False) %}
         "{{ vip.address }}"{%- if not loop.last %}, {% endif %}

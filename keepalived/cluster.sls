@@ -20,7 +20,7 @@ keepalived_config:
   - require:
     - pkg: keepalived_packages
 
-{% for instance_name, instance in cluster.instance.iteritems() %}
+{% for instance_name, instance in cluster.instance.items() %}
 
 {%- if instance.notify_action is defined %}
 
@@ -42,7 +42,7 @@ keepalived_{{ instance_name }}_notify:
 {% endfor %}
 
 {%- set _deployed = [] %}
-{%- for name, script in cluster.get('vrrp_scripts', {}).iteritems() %}
+{%- for name, script in cluster.get('vrrp_scripts', {}).items() %}
 {%- if script.get('name', name) not in _deployed %}keepalived_vrrp_script_{{ script.get('name', name) }}:{% else %}{% continue %}{% endif %}
 {%- do _deployed.append(script.get('name', name)) %}
     file.managed:
